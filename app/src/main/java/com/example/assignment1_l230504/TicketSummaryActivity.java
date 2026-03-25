@@ -27,7 +27,7 @@ public class TicketSummaryActivity extends AppCompatActivity {
         double snacksTotal = getIntent().getDoubleExtra("SNACKS_TOTAL", 0);
         int pricePerSeat = getIntent().getIntExtra("TICKET_PRICE_PER_SEAT", 16);
 
-        ArrayList<SnackItem> selectedSnacks = (ArrayList<SnackItem>) getIntent().getSerializableExtra("SELECTED_SNACKS");
+        ArrayList<Snack> selectedSnacks = (ArrayList<Snack>) getIntent().getSerializableExtra("SELECTED_SNACKS");
         if (selectedSnacks == null) {
             selectedSnacks = new ArrayList<>();
         }
@@ -126,14 +126,14 @@ public class TicketSummaryActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    private String formatSnacks(ArrayList<SnackItem> snacks) {
+    private String formatSnacks(ArrayList<Snack> snacks) {
         if (snacks == null || snacks.isEmpty()) {
             return "• No snacks selected";
         }
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < snacks.size(); i++) {
-            SnackItem snack = snacks.get(i);
+            Snack snack = snacks.get(i);
             sb.append("• X").append(snack.getQuantity())
                     .append(" ").append(snack.getName())
                     .append(" (").append(snack.getDescription()).append(")")

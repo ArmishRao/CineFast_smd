@@ -2,25 +2,32 @@ package com.example.assignment1_l230504;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
 public class SeatSelectionActivity extends AppCompatActivity {
 
     GridLayout gridLeft, gridRight;
-    Button btnBookSeats, btnProceedSnacks;
+    Button btnBookSeats, btnProceedSnacks, btnComingSoon, btnWatchTrailer;
     TextView tvMovieName, tvTotal;
+    LinearLayout buttonsContainer;
 
     ArrayList<Integer> selectedSeats = new ArrayList<>();
     ArrayList<Integer> bookedSeats = new ArrayList<>();
     String movie;
+    boolean isComingSoon = false;
+    String trailerURL = "";
 
     int pricePerSeat = 500;
 
@@ -35,9 +42,31 @@ public class SeatSelectionActivity extends AppCompatActivity {
         btnProceedSnacks = findViewById(R.id.btnProceedSnacks);
         tvMovieName = findViewById(R.id.tvMovieName);
         tvTotal = findViewById(R.id.tvTotal);
+        buttonsContainer = findViewById(R.id.buttonsContainer);
 
+        // Get movie details from intent
         movie = getIntent().getStringExtra("MOVIE_NAME");
+        isComingSoon = getIntent().getBooleanExtra("IS_COMING_SOON", false);
+        trailerURL = getIntent().getStringExtra("TRAILER_URL");
+
         tvMovieName.setText(movie);
+
+        if (isComingSoon) {
+            setupComingSoonMode();
+        } else {
+            setupNowShowingMode();
+        }
+
+        updateTotal();
+    }
+
+    private void setupNowShowingMode() {
+        btnBookSeats.setVisibility(View.VISIBLE);
+        btnProceedSnacks.setVisibility(View.VISIBLE);
+
+        if (btnComingSoon != null) btnComingSoon.setVisibility(View.GONE);
+        if (btnWatchTrailer != null) btnWatchTrailer.setVisibility(View.GONE);
+
         bookedSeats.add(2);
         bookedSeats.add(5);
         bookedSeats.add(9);
@@ -46,13 +75,83 @@ public class SeatSelectionActivity extends AppCompatActivity {
         createSeats(gridLeft, 16, 0);
         createSeats(gridRight, 16, 100);
 
-        btnBookSeats.setOnClickListener(v -> goToSummary());
-        btnProceedSnacks.setOnClickListener(v -> goToSnacks());
+        btnBookSeats.setOnClickListener(v -> {
+            if (selectedSeats.isEmpty()) {
+                Toast.makeText(this, "Please select at least one seat", Toast.LENGTH_SHORT).show();
+            } else {
+                showBookingConfirmation();
+            }
+        });
 
-        updateTotal();
+        btnProceedSnacks.setOnClickListener(v -> {
+            if (selectedSeats.isEmpty()) {
+                Toast.makeText(this, "Please select at least one seat", Toast.LENGTH_SHORT).show();
+            } else {
+                goToSnacks();
+            }
+        });
+    }
+
+    private void setupComingSoonMode() {
+       // HIDE NORMAL BUTTON
+        btnBookSeats.setVisibility(View.GONE);
+        btnProceedSnacks.setVisibility(View.GONE);
+
+        // Create Coming Soon buttons if they don't exist
+        if (btnComingSoon == null) {
+            btnComingSoon = new Button(this);
+            btnWatchTrailer = new Button(this);
+
+            btnComingSoon.setText("Coming Soon");
+            btnComingSoon.setEnabled(false);
+            btnComingSoon.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+            btnComingSoon.setTextColor(Color.WHITE);
+
+            btnWatchTrailer.setText("Watch Trailer");
+            btnWatchTrailer.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_red));
+            btnWatchTrailer.setTextColor(Color.WHITE);
+
+            buttonsContainer.removeAllViews();
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    1
+            );
+            params.setMargins(0, 0, 16, 0);
+
+            btnComingSoon.setLayoutParams(params);
+            btnWatchTrailer.setLayoutParams(params);
+
+            buttonsContainer.addView(btnComingSoon);
+            buttonsContainer.addView(btnWatchTrailer);
+        }
+
+        // Show the Coming Soon buttons
+        btnComingSoon.setVisibility(View.VISIBLE);
+        btnWatchTrailer.setVisibility(View.VISIBLE);
+
+        // Create disabled seats (non-clickable)
+        createDisabledSeats(gridLeft, 16, 0);
+        createDisabledSeats(gridRight, 16, 100);
+
+        // Update total text for Coming Soon
+        tvTotal.setText("Coming Soon! Seats not available yet");
+        tvTotal.setTextColor(Color.YELLOW);
+
+        // Watch Trailer button click listener
+        btnWatchTrailer.setOnClickListener(v -> {
+            if (trailerURL != null && !trailerURL.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerURL));
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Trailer not available", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void createSeats(GridLayout grid, int count, int offset) {
+        grid.removeAllViews();
         for (int i = 0; i < count; i++) {
             Button seat = new Button(this);
             int seatId = i + offset;
@@ -61,7 +160,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.width = 90;
             params.height = 90;
-            params.setMargins(10,10,10,10);
+            params.setMargins(10, 10, 10, 10);
             seat.setLayoutParams(params);
 
             seat.setText("");
@@ -73,6 +172,28 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 seat.setBackgroundColor(Color.DKGRAY);
                 seat.setOnClickListener(this::toggleSeat);
             }
+
+            grid.addView(seat);
+        }
+    }
+
+    private void createDisabledSeats(GridLayout grid, int count, int offset) {
+        grid.removeAllViews();
+        for (int i = 0; i < count; i++) {
+            Button seat = new Button(this);
+            int seatId = i + offset;
+            seat.setTag(seatId);
+
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+            params.width = 90;
+            params.height = 90;
+            params.setMargins(10, 10, 10, 10);
+            seat.setLayoutParams(params);
+
+            seat.setText("");
+            seat.setBackgroundColor(Color.DKGRAY);
+            seat.setEnabled(false); // Disable seat selection
+            seat.setAlpha(0.5f); // Make it look disabled
 
             grid.addView(seat);
         }
@@ -91,22 +212,29 @@ public class SeatSelectionActivity extends AppCompatActivity {
         }
 
         btnProceedSnacks.setEnabled(!selectedSeats.isEmpty());
+        btnBookSeats.setEnabled(!selectedSeats.isEmpty());
         updateTotal();
     }
 
     private void updateTotal() {
         int count = selectedSeats.size();
         int total = count * pricePerSeat;
-        tvTotal.setText("Selected: " + count + " | Total: Rs " + total);
+        if (!isComingSoon) {
+            tvTotal.setText("Selected: " + count + " | Total: Rs " + total);
+        }
     }
 
-    private void goToSummary() {
+    private void showBookingConfirmation() {
+        Toast.makeText(this, "Booking Confirmed!", Toast.LENGTH_SHORT).show();
+
         bookedSeats.addAll(selectedSeats);
 
         Intent i = new Intent(this, TicketSummaryActivity.class);
         i.putIntegerArrayListExtra("SEATS", selectedSeats);
         i.putExtra("TOTAL", selectedSeats.size() * pricePerSeat);
+        i.putExtra("MOVIE_NAME", movie);
         startActivity(i);
+        finish();
     }
 
     private void goToSnacks() {
@@ -114,7 +242,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
         Intent i = new Intent(this, SnacksActivity.class);
         i.putIntegerArrayListExtra("SEATS", selectedSeats);
-        i.putExtra("MOVIE_NAME",movie);
+        i.putExtra("MOVIE_NAME", movie);
         startActivity(i);
     }
 }

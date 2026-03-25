@@ -3,45 +3,31 @@ package com.example.assignment1_l230504;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
 public class SnacksActivity extends AppCompatActivity {
-    Button btnplus1, btnplus2, btnplus3, btnsub1, btnsub2, btnsub3, btnconfirm;
-    TextView tvQuantity1, tvQuantity2, tvQuantity3;
 
-    // hardcoding it for now
-    final double POPCORN_PRICE = 8.99;
-    final double NACHOS_PRICE = 7.99;
-    final double SOFT_DRINK_PRICE = 5.99;
-
-    int popcornQuantity = 0;
-    int nachosQuantity = 0;
-    int softDrinkQuantity = 0;
-
+    ListView listViewSnacks;
+    Button btnConfirm;
+    SnackAdapter snackAdapter;
+    ArrayList<Snack> snacks;
     ArrayList<Integer> seats;
     String movieName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_snack);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        listViewSnacks = findViewById(R.id.listViewSnacks);
+        btnConfirm = findViewById(R.id.confirm);
 
+        // Get data from intent
         seats = getIntent().getIntegerArrayListExtra("SEATS");
         movieName = getIntent().getStringExtra("MOVIE_NAME");
 
@@ -57,71 +43,22 @@ public class SnacksActivity extends AppCompatActivity {
             return;
         }
 
-        initViews();
-        setupClickListeners();
-    }
+        // Initialize snacks with images, names, descriptions, and prices
+        snacks = new ArrayList<>();
+        snacks.add(new Snack(R.drawable.popcorn, "Popcorn", "Large/Buttered", 8.99));
+        snacks.add(new Snack(R.drawable.nachos, "Nachos", "with Cheese dip", 7.99));
+        snacks.add(new Snack(R.drawable.softdrink, "Soft Drink", "Large/Any Flavor", 5.99));
+        snacks.add(new Snack(R.drawable.hotdog, "Hot Dog", "with Ketchup & Mustard", 6.99)); // 4th snack item
 
-    private void setupClickListeners() {
-        btnplus1.setOnClickListener(v -> {
-            popcornQuantity++;
-            showQuantityUpdate("Popcorn", popcornQuantity);
-            if (tvQuantity1 != null)
-                tvQuantity1.setText(String.valueOf(popcornQuantity));
-        });
+        // Setup adapter
+        snackAdapter = new SnackAdapter(this, snacks, this::updateTotal);
+        listViewSnacks.setAdapter(snackAdapter);
 
-        btnplus2.setOnClickListener(v -> {
-            nachosQuantity++;
-            showQuantityUpdate("nachos", nachosQuantity);
-            if (tvQuantity2 != null)
-                tvQuantity2.setText(String.valueOf(nachosQuantity));
-        });
-
-        btnplus3.setOnClickListener(v -> {
-            softDrinkQuantity++;
-            showQuantityUpdate("soft Drinks", softDrinkQuantity);
-            if (tvQuantity3 != null)
-                tvQuantity3.setText(String.valueOf(softDrinkQuantity));
-        });
-
-        btnsub1.setOnClickListener(v -> {
-            if (popcornQuantity > 0)
-                popcornQuantity--;
-            showQuantityUpdate("popcorn", popcornQuantity);
-            if (tvQuantity1 != null)
-                tvQuantity1.setText(String.valueOf(popcornQuantity));
-        });
-
-        btnsub2.setOnClickListener(v -> {
-            if (nachosQuantity > 0)
-                nachosQuantity--;
-            showQuantityUpdate("nachos", nachosQuantity);
-            if (tvQuantity2 != null)
-                tvQuantity2.setText(String.valueOf(nachosQuantity));
-        });
-
-        btnsub3.setOnClickListener(v -> {
-            if (softDrinkQuantity > 0)
-                softDrinkQuantity--;
-            showQuantityUpdate("soft Drinks", softDrinkQuantity);
-            if (tvQuantity3 != null)
-                tvQuantity3.setText(String.valueOf(softDrinkQuantity));
-        });
-
-        btnconfirm.setOnClickListener(v -> {
+        // Confirm button click listener
+        btnConfirm.setOnClickListener(v -> {
             try {
                 double totalSnackPrice = calculateTotalSnackPrice();
-
-                ArrayList<SnackItem> selectedSnacks = new ArrayList<>();
-
-                if (popcornQuantity > 0) {
-                    selectedSnacks.add(new SnackItem("Popcorn", "Large/Buttered", POPCORN_PRICE, popcornQuantity));
-                }
-                if (nachosQuantity > 0) {
-                    selectedSnacks.add(new SnackItem("Nachos", "with Cheese dip", NACHOS_PRICE, nachosQuantity));
-                }
-                if (softDrinkQuantity > 0) {
-                    selectedSnacks.add(new SnackItem("Soft Drink", "Large/Any Flavor", SOFT_DRINK_PRICE, softDrinkQuantity));
-                }
+                ArrayList<SnackItem> selectedSnacks = getSelectedSnacks();
 
                 android.util.Log.d("SnacksActivity", "Movie: " + movieName);
                 android.util.Log.d("SnacksActivity", "Seats: " + seats.toString());
@@ -132,7 +69,7 @@ public class SnacksActivity extends AppCompatActivity {
                 intent.putExtra("MOVIE_NAME", movieName);
                 intent.putIntegerArrayListExtra("SEATS", seats);
                 intent.putExtra("SNACKS_TOTAL", totalSnackPrice);
-                intent.putExtra("TICKET_PRICE_PER_SEAT", 16); // $16 per seat as in image
+                intent.putExtra("TICKET_PRICE_PER_SEAT", 16);
                 intent.putExtra("SCREEN_TYPE", "ScreenX • Dolby Atmos");
                 intent.putExtra("THEATER", "Stars (90°Mall)");
                 intent.putExtra("HALL", "1st");
@@ -150,26 +87,30 @@ public class SnacksActivity extends AppCompatActivity {
     }
 
     private double calculateTotalSnackPrice() {
-        return (popcornQuantity * POPCORN_PRICE) +
-                (nachosQuantity * NACHOS_PRICE) +
-                (softDrinkQuantity * SOFT_DRINK_PRICE);
+        double total = 0;
+        for (Snack snack : snacks) {
+            total += snack.getTotalPrice();
+        }
+        return total;
     }
 
-    private void showQuantityUpdate(String itemName, int quantity) {
-        String message = itemName + " quantity: " + quantity;
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    private ArrayList<SnackItem> getSelectedSnacks() {
+        ArrayList<SnackItem> selectedSnacks = new ArrayList<>();
+        for (Snack snack : snacks) {
+            if (snack.getQuantity() > 0) {
+                selectedSnacks.add(new SnackItem(
+                        snack.getName(),
+                        snack.getDescription(),
+                        snack.getPrice(),
+                        snack.getQuantity()
+                ));
+            }
+        }
+        return selectedSnacks;
     }
 
-    void initViews() {
-        btnplus1 = findViewById(R.id.btnplus1);
-        btnsub1 = findViewById(R.id.btnsub1);
-        btnplus2 = findViewById(R.id.btnplus2);
-        btnsub2 = findViewById(R.id.btnsub2);
-        btnplus3 = findViewById(R.id.btnplus3);
-        btnsub3 = findViewById(R.id.btnsub3);
-        btnconfirm = findViewById(R.id.confirm);
-        tvQuantity1 = findViewById(R.id.tv_quantity1);
-        tvQuantity2 = findViewById(R.id.tv_quantity2);
-        tvQuantity3 = findViewById(R.id.tv_quantity3);
+    private void updateTotal() {
+        double total = calculateTotalSnackPrice();
+        Toast.makeText(this, "Total: $" + String.format("%.2f", total), Toast.LENGTH_SHORT).show();
     }
 }

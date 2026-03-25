@@ -37,7 +37,6 @@
         android:layout_below="@id/topBar"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-
         android:layout_height="6dp"
         android:background="#00FFAA"/>
 
@@ -114,6 +113,7 @@
 
     <!-- BUTTONS -->
     <LinearLayout
+        android:id="@+id/buttonsContainer"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:orientation="horizontal"
