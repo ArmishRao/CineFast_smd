@@ -27,7 +27,7 @@ public class onBoardingScreen extends AppCompatActivity {
         onBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(onBoardingScreen.this,homeScreenActivity.class);
+                Intent intent=new Intent(onBoardingScreen.this,MainActivity.class);
                 startActivity(intent);
                 finish();
             }
