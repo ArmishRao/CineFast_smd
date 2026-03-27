@@ -48,7 +48,7 @@ public class SnacksActivity extends AppCompatActivity {
         snacks.add(new Snack(R.drawable.popcorn, "Popcorn", "Large/Buttered", 8.99));
         snacks.add(new Snack(R.drawable.nachos, "Nachos", "with Cheese dip", 7.99));
         snacks.add(new Snack(R.drawable.softdrink, "Soft Drink", "Large/Any Flavor", 5.99));
-        snacks.add(new Snack(R.drawable.hotdog, "Hot Dog", "with Ketchup & Mustard", 6.99)); // 4th snack item
+        snacks.add(new Snack(R.drawable.hotdog, "Hot Dog", "with Ketchup & Mustard", 6.99));
 
         // Setup adapter
         snackAdapter = new SnackAdapter(this, snacks, this::updateTotal);
@@ -59,11 +59,6 @@ public class SnacksActivity extends AppCompatActivity {
             try {
                 double totalSnackPrice = calculateTotalSnackPrice();
                 ArrayList<SnackItem> selectedSnacks = getSelectedSnacks();
-
-                android.util.Log.d("SnacksActivity", "Movie: " + movieName);
-                android.util.Log.d("SnacksActivity", "Seats: " + seats.toString());
-                android.util.Log.d("SnacksActivity", "Snacks Total: $" + totalSnackPrice);
-                android.util.Log.d("SnacksActivity", "Selected Snacks: " + selectedSnacks.size());
 
                 Intent intent = new Intent(SnacksActivity.this, TicketSummaryActivity.class);
                 intent.putExtra("MOVIE_NAME", movieName);

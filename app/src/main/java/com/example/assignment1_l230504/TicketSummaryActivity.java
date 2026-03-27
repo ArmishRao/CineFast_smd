@@ -1,6 +1,8 @@
 package com.example.assignment1_l230504;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,8 +28,8 @@ public class TicketSummaryActivity extends AppCompatActivity {
         ArrayList<Integer> seats = getIntent().getIntegerArrayListExtra("SEATS");
         double snacksTotal = getIntent().getDoubleExtra("SNACKS_TOTAL", 0);
         int pricePerSeat = getIntent().getIntExtra("TICKET_PRICE_PER_SEAT", 16);
+        ArrayList<SnackItem> selectedSnacks = (ArrayList<SnackItem>) getIntent().getSerializableExtra("SELECTED_SNACKS");
 
-        ArrayList<Snack> selectedSnacks = (ArrayList<Snack>) getIntent().getSerializableExtra("SELECTED_SNACKS");
         if (selectedSnacks == null) {
             selectedSnacks = new ArrayList<>();
         }
@@ -47,7 +49,6 @@ public class TicketSummaryActivity extends AppCompatActivity {
         String time = getIntent().getStringExtra("TIME");
         if (time == null) time = "22:15";
 
-
         int seatCount = seats != null ? seats.size() : 0;
         double ticketPriceTotal = seatCount * pricePerSeat;
         double finalTotal = ticketPriceTotal + snacksTotal;
@@ -65,6 +66,9 @@ public class TicketSummaryActivity extends AppCompatActivity {
         tvSnacks.setText(snacksDisplay);
         tvTotal.setText(String.format("TOTAL: $%.2f", finalTotal));
 
+        // Save booking information to SharedPreferences
+        saveBookingToSharedPreferences(movieName, seatCount, finalTotal);
+
         final String finalMovieName = movieName;
         final ArrayList<Integer> finalSeats = seats;
         final double finalFinalTotal = finalTotal;
@@ -75,12 +79,25 @@ public class TicketSummaryActivity extends AppCompatActivity {
         final String finalDate = date;
         final String finalTime = time;
         final int finalPricePerSeat = pricePerSeat;
+        final ArrayList<SnackItem> finalSelectedSnacks = selectedSnacks;
 
         btnSendTicket.setOnClickListener(v -> {
             shareTicket(finalMovieName, finalSeats, finalFinalTotal,
                     finalSnacksDisplay, finalScreenType, finalTheater,
-                    finalHall, finalDate, finalTime, finalPricePerSeat);
+                    finalHall, finalDate, finalTime, finalPricePerSeat, finalSelectedSnacks);
         });
+    }
+
+    private void saveBookingToSharedPreferences(String movieName, int seatCount, double totalPrice) {
+        SharedPreferences prefs = getSharedPreferences("BookingPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString("LAST_MOVIE", movieName);
+        editor.putInt("LAST_SEAT_COUNT", seatCount);
+        editor.putFloat("LAST_TOTAL_PRICE", (float) totalPrice);
+        editor.apply();
+
+        Toast.makeText(this, "Booking Confirmed! Details saved.", Toast.LENGTH_SHORT).show();
     }
 
     private void initViews() {
@@ -126,14 +143,14 @@ public class TicketSummaryActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    private String formatSnacks(ArrayList<Snack> snacks) {
+    private String formatSnacks(ArrayList<SnackItem> snacks) {
         if (snacks == null || snacks.isEmpty()) {
             return "• No snacks selected";
         }
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < snacks.size(); i++) {
-            Snack snack = snacks.get(i);
+            SnackItem snack = snacks.get(i);
             sb.append("• X").append(snack.getQuantity())
                     .append(" ").append(snack.getName())
                     .append(" (").append(snack.getDescription()).append(")")
@@ -147,9 +164,11 @@ public class TicketSummaryActivity extends AppCompatActivity {
 
     private void shareTicket(String movie, ArrayList<Integer> seats, double total,
                              String snacksDisplay, String screenType, String theater,
-                             String hall, String date, String time, int pricePerSeat) {
+                             String hall, String date, String time, int pricePerSeat,
+                             ArrayList<SnackItem> selectedSnacks) {
 
         String ticketsDetail = formatTickets(seats, pricePerSeat);
+        String snacksDetail = formatSnacks(selectedSnacks);
 
         String message =
                 " *BOOKING DETAILS*\n\n" +
@@ -162,7 +181,7 @@ public class TicketSummaryActivity extends AppCompatActivity {
                         "**Tickets**\n" +
                         ticketsDetail + "\n\n" +
                         "**Snacks**\n" +
-                        snacksDisplay + "\n\n" +
+                        snacksDetail + "\n\n" +
                         "**TOTAL**\n" +
                         String.format("**$%.2f**\n\n", total) +
                         "Enjoy your movie!";
