@@ -26,7 +26,7 @@ public class ComingSoonFragment extends Fragment {
         movies.add(new Movie(R.drawable.deadpool, "Deadpool 3", "Action/Comedy / 120 min",
                 "https://www.youtube.com/watch?v=73_1biulkYk"));
 
-        // Pass true for isComingSoon
+
         recyclerView.setAdapter(new MovieAdapter(getContext(), movies, true));
         return view;
     }

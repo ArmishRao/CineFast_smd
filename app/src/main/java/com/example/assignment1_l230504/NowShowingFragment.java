@@ -26,7 +26,6 @@ public class NowShowingFragment extends Fragment {
         movies.add(new Movie(R.drawable.interstellar, "Interstellar", "Sci-Fi / 169 min",
                 "https://www.youtube.com/watch?v=zSWdZVtXT7E"));
 
-        // Pass false for isComingSoon
         recyclerView.setAdapter(new MovieAdapter(getContext(), movies, false));
         return view;
     }

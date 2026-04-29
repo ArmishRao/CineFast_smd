@@ -44,7 +44,6 @@ public class SeatSelectionActivity extends AppCompatActivity {
         tvTotal = findViewById(R.id.tvTotal);
         buttonsContainer = findViewById(R.id.buttonsContainer);
 
-        // Get movie details from intent
         movie = getIntent().getStringExtra("MOVIE_NAME");
         isComingSoon = getIntent().getBooleanExtra("IS_COMING_SOON", false);
         trailerURL = getIntent().getStringExtra("TRAILER_URL");
@@ -93,11 +92,10 @@ public class SeatSelectionActivity extends AppCompatActivity {
     }
 
     private void setupComingSoonMode() {
-       // HIDE NORMAL BUTTON
+
         btnBookSeats.setVisibility(View.GONE);
         btnProceedSnacks.setVisibility(View.GONE);
 
-        // Create Coming Soon buttons if they don't exist
         if (btnComingSoon == null) {
             btnComingSoon = new Button(this);
             btnWatchTrailer = new Button(this);
@@ -127,19 +125,15 @@ public class SeatSelectionActivity extends AppCompatActivity {
             buttonsContainer.addView(btnWatchTrailer);
         }
 
-        // Show the Coming Soon buttons
         btnComingSoon.setVisibility(View.VISIBLE);
         btnWatchTrailer.setVisibility(View.VISIBLE);
 
-        // Create disabled seats (non-clickable)
         createDisabledSeats(gridLeft, 16, 0);
         createDisabledSeats(gridRight, 16, 100);
 
-        // Update total text for Coming Soon
         tvTotal.setText("Coming Soon! Seats not available yet");
         tvTotal.setTextColor(Color.YELLOW);
 
-        // Watch Trailer button click listener
         btnWatchTrailer.setOnClickListener(v -> {
             if (trailerURL != null && !trailerURL.isEmpty()) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerURL));
@@ -192,8 +186,8 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
             seat.setText("");
             seat.setBackgroundColor(Color.DKGRAY);
-            seat.setEnabled(false); // Disable seat selection
-            seat.setAlpha(0.5f); // Make it look disabled
+            seat.setEnabled(false);
+            seat.setAlpha(0.5f);
 
             grid.addView(seat);
         }

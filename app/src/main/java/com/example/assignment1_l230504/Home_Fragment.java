@@ -1,38 +1,3 @@
-//package com.example.assignment1_l230504;
-//
-//import android.os.Bundle;
-//
-//import androidx.fragment.app.Fragment;
-//
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import com.google.android.material.tabs.TabLayout;
-//import com.google.android.material.tabs.TabLayoutMediator;
-//
-//import androidx.viewpager2.widget.ViewPager2;
-//public class Home_Fragment extends Fragment {
-//
-//    TabLayout tabLayout;
-//    ViewPager2 viewPage;
-//
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_home_, container, false);
-//
-//        tabLayout = view.findViewById(R.id.tabLayout);
-//        viewPage = view.findViewById(R.id.viewPager);
-//
-//        ViewPageAdapter adapter = new ViewPageAdapter(this);
-//        viewPage.setAdapter(adapter);
-//
-//        new TabLayoutMediator(tabLayout, viewPage,
-//                (tab, position) -> {
-//                    if (position == 0) tab.setText("Now Showing");
-//                    else tab.setText("Coming Soon");
-//                }).attach();
-//
-//        return view;
-//    }
 package com.example.assignment1_l230504;
 
 import android.content.Context;
@@ -61,7 +26,7 @@ public class Home_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true); // Enable options menu
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -73,7 +38,7 @@ public class Home_Fragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
 
-        // Date button click listeners
+
         btnToday.setOnClickListener(v -> {
             selectedDate = "Today";
             updateDateButtonStyles();
@@ -109,7 +74,6 @@ public class Home_Fragment extends Fragment {
     }
 
     private void refreshMovies() {
-        // Refresh the ViewPager to update movie lists based on selected date
         ViewPager2 viewPager = getView().findViewById(R.id.viewPager);
         if (viewPager != null && viewPager.getAdapter() != null) {
             viewPager.getAdapter().notifyDataSetChanged();
@@ -119,7 +83,7 @@ public class Home_Fragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        // Add three-dots menu item
+
         menu.add(Menu.NONE, 1, Menu.NONE, "View Last Booking")
                 .setIcon(android.R.drawable.ic_menu_info_details)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -127,7 +91,8 @@ public class Home_Fragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getTitle() != null && item.getTitle().equals("View Last Booking")) {
+
+        if (item.getItemId() == 1) {
             showLastBooking();
             return true;
         }
@@ -139,7 +104,7 @@ public class Home_Fragment extends Fragment {
 
         String movieName = prefs.getString("LAST_MOVIE", "");
         int seatCount = prefs.getInt("LAST_SEAT_COUNT", 0);
-        double totalPrice = prefs.getFloat("LAST_TOTAL_PRICE", 0);
+        float totalPrice = prefs.getFloat("LAST_TOTAL_PRICE", 0);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Last Booking");

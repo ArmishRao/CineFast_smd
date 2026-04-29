@@ -54,21 +54,20 @@ Button btnTrailer3, btnBook3;
         btnBook2 = findViewById(R.id.btnBook2);
         btnTrailer3 = findViewById(R.id.btnTrailer3);
         btnBook3 = findViewById(R.id.btnBook3);
-        // IMPLICIT INTENT
         btnTrailer1.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://www.youtube.com/watch?v=zSWdZVtXT7E"));
             startActivity(intent);
         });
 
-        // EXPLICIT INTENT
+
         btnBook1.setOnClickListener(v -> {
             Intent intent = new Intent(homeScreenActivity.this,
                     SeatSelectionActivity.class);
             intent.putExtra("MOVIE_NAME", "Interstellar");
             startActivity(intent);
         });
-        //2nd movie
+
         btnTrailer2.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://www.youtube.com/watch?v=zSWdZVtXT7E"));

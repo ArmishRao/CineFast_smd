@@ -27,7 +27,6 @@ public class SnacksActivity extends AppCompatActivity {
         listViewSnacks = findViewById(R.id.listViewSnacks);
         btnConfirm = findViewById(R.id.confirm);
 
-        // Get data from intent
         seats = getIntent().getIntegerArrayListExtra("SEATS");
         movieName = getIntent().getStringExtra("MOVIE_NAME");
 
@@ -43,18 +42,15 @@ public class SnacksActivity extends AppCompatActivity {
             return;
         }
 
-        // Initialize snacks with images, names, descriptions, and prices
         snacks = new ArrayList<>();
         snacks.add(new Snack(R.drawable.popcorn, "Popcorn", "Large/Buttered", 8.99));
         snacks.add(new Snack(R.drawable.nachos, "Nachos", "with Cheese dip", 7.99));
         snacks.add(new Snack(R.drawable.softdrink, "Soft Drink", "Large/Any Flavor", 5.99));
         snacks.add(new Snack(R.drawable.hotdog, "Hot Dog", "with Ketchup & Mustard", 6.99));
 
-        // Setup adapter
         snackAdapter = new SnackAdapter(this, snacks, this::updateTotal);
         listViewSnacks.setAdapter(snackAdapter);
 
-        // Confirm button click listener
         btnConfirm.setOnClickListener(v -> {
             try {
                 double totalSnackPrice = calculateTotalSnackPrice();

@@ -9,7 +9,6 @@ public class Snack implements Serializable {
     private double price;
     private int quantity;
 
-    // Constructor with image, name, description, price
     public Snack(int imageResource, String name, String description, double price) {
         this.imageResource = imageResource;
         this.name = name;

@@ -66,7 +66,7 @@ public class TicketSummaryActivity extends AppCompatActivity {
         tvSnacks.setText(snacksDisplay);
         tvTotal.setText(String.format("TOTAL: $%.2f", finalTotal));
 
-        // Save booking information to SharedPreferences
+
         saveBookingToSharedPreferences(movieName, seatCount, finalTotal);
 
         final String finalMovieName = movieName;
