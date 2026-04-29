@@ -1,1 +1,85 @@
-/build
+# ============================================
+# Firebase & Sensitive Files
+# ============================================
+google-services.json
+local.properties
+*.jks
+*.keystore
+*.key
+
+# ============================================
+# Built application files
+# ============================================
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# ============================================
+# Java & Kotlin
+# ============================================
+*.class
+
+# ============================================
+# Gradle
+# ============================================
+.gradle/
+build/
+*/build/
+gradle/
+
+# ============================================
+# Android Studio
+# ============================================
+*.iml
+*.iws
+.idea/
+.cxx/
+.idea/navEditor.xml
+.idea/deploymentTargetDropDown.xml
+.idea/misc.xml
+.idea/workspace.xml
+.idea/caches/
+.idea/modules.xml
+.idea/libraries/
+.DS_Store
+captures/
+.externalNativeBuild/
+
+# ============================================
+# Crashlytics
+# ============================================
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# ============================================
+# Testing
+# ============================================
+*.test
+*.tests
+test-coverage/
+*.tmp
+
+# ============================================
+# Logs & OS generated
+# ============================================
+*.log
+Thumbs.db
+.DS_Store
+
+# ============================================
+# Keystore files
+# ============================================
+*.jks
+*.keystore
+
+# ============================================
+# Other
+# ============================================
+*.lock
+*.pid
+*.swp
+*~
