@@ -1,0 +1,20 @@
+[
+  {
+    "image": "dark",
+    "name": "The Dark Knight",
+    "genre": "Action / 152 min",
+    "trailerURL": "https://www.youtube.com/watch?v=EXeTwQWrcwY"
+  },
+  {
+    "image": "inception",
+    "name": "Inception",
+    "genre": "Sci-Fi / 148 min",
+    "trailerURL": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+  },
+  {
+    "image": "interstellar",
+    "name": "Interstellar",
+    "genre": "Sci-Fi / 169 min",
+    "trailerURL": "https://www.youtube.com/watch?v=zSWdZVtXT7E"
+  }
+]

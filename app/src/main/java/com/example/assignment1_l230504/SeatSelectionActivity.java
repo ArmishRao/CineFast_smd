@@ -234,9 +234,18 @@ public class SeatSelectionActivity extends AppCompatActivity {
     private void goToSnacks() {
         bookedSeats.addAll(selectedSeats);
 
-        Intent i = new Intent(this, SnacksActivity.class);
-        i.putIntegerArrayListExtra("SEATS", selectedSeats);
-        i.putExtra("MOVIE_NAME", movie);
-        startActivity(i);
+        SnacksFragment snacksFragment = new SnacksFragment();
+        Bundle args = new Bundle();
+        args.putIntegerArrayList("SEATS", selectedSeats);
+        args.putString("MOVIE_NAME", movie);
+        snacksFragment.setArguments(args);
+
+        // Replace container with snack fragment
+        // Make sure your seat_selection layout has a FrameLayout with id "fragment_container"
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, snacksFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

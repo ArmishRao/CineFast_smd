@@ -16,7 +16,7 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
 
-    <!-- Progress Bar - THIS MUST EXIST -->
+    <!-- ProgressBar - ADD THIS -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

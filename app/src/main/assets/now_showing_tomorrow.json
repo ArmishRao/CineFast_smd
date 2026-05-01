@@ -1,0 +1,32 @@
+[
+  {
+    "image": "dune",
+    "name": "Dune: Part Two",
+    "genre": "Sci-Fi / 166 min",
+    "trailerURL": "https://www.youtube.com/watch?v=Way9Dexny3w"
+  },
+  {
+    "image": "avatar",
+    "name": "Avatar: The Way of Water",
+    "genre": "Fantasy / 192 min",
+    "trailerURL": "https://www.youtube.com/watch?v=d9MyW72ELq0"
+  },
+  {
+    "image": "deadpool",
+    "name": "Deadpool 3",
+    "genre": "Action/Comedy / 120 min",
+    "trailerURL": "https://www.youtube.com/watch?v=73_1biulkYk"
+  },
+  {
+    "image": "johnwick",
+    "name": "John Wick 4",
+    "genre": "Action / 169 min",
+    "trailerURL": "https://www.youtube.com/watch?v=yjRHZEUamCc"
+  },
+  {
+    "image": "missionimpossible",
+    "name": "Mission: Impossible 8",
+    "genre": "Action / 163 min",
+    "trailerURL": "https://www.youtube.com/watch?v=2m1l7Wm6V8M"
+  }
+]

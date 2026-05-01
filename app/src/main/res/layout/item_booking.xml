@@ -3,44 +3,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="#1A1A1A"
+    android:layout_marginBottom="12dp"
     app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="#1E1E1E"
     app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="horizontal"
+        android:padding="12dp">
 
-        <TextView
-            android:id="@+id/tvMovieName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Movie Name"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <!-- Movie Poster (Left) -->
+        <ImageView
+            android:id="@+id/imgMoviePoster"
+            android:layout_width="70dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/interstellar"
+            android:layout_gravity="center_vertical" />
 
-        <TextView
-            android:id="@+id/tvSeats"
-            android:layout_width="match_parent"
+        <!-- Movie Details (Center) -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Seats: 0"
-            android:textColor="@color/light_gray"
-            android:textSize="14sp"
-            android:layout_marginTop="8dp" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/tvTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Total: $0.00"
-            android:textColor="@color/accent_red"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/tvMovieName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interstellar"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13.04.2025 | 22:15"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/tvTickets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 Tickets"
+                android:textColor="#E53935"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- Cancel Button (Right) -->
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Cancel"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#E53935"
+            android:minWidth="70dp"
+            android:layout_gravity="center_vertical" />
 
     </LinearLayout>
 

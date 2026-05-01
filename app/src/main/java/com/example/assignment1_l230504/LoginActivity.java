@@ -34,13 +34,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // Initialize SharedPreferences for session management
-        sharedPreferences = getSharedPreferences("cinefast_session_pref_v3", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE);
 
-        // Check if user is already logged in
+        // if user is already logged in
         if (isUserLoggedIn()) {
             navigateToMainActivity();
             return;
@@ -59,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         cbRememberMe = findViewById(R.id.cbRememberMe);
         progressBar = findViewById(R.id.progressBar);
 
-        // Load saved email if "Remember Me" was checked
+        // Load saved email if Remember Me was checked
         String savedEmail = sharedPreferences.getString("saved_email", "");
         boolean rememberMe = sharedPreferences.getBoolean("remember_me", false);
 

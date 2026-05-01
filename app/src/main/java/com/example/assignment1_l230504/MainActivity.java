@@ -35,18 +35,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize Firebase Auth
+
         mAuth = FirebaseAuth.getInstance();
-
-        // Add Toast with "CineFAST" tag
-        Toast.makeText(getApplicationContext(), "CineFAST", Toast.LENGTH_SHORT).show();
-
-        // Initialize views
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
 
-        // Setup Toolbar
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("CineFAST");
@@ -119,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void logout() {
         // Clear SharedPreferences session
-        SharedPreferences prefs = getSharedPreferences("cinefast_session_pref_v3", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("sp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.apply();

@@ -1,0 +1,20 @@
+[
+  {
+    "image": "dune",
+    "name": "Dune: Part Two",
+    "genre": "Sci-Fi / 166 min",
+    "trailerURL": "https://www.youtube.com/watch?v=Way9Dexny3w"
+  },
+  {
+    "image": "avatar",
+    "name": "Avatar 3",
+    "genre": "Fantasy / 180 min",
+    "trailerURL": "https://www.youtube.com/watch?v=d9MyW72ELq0"
+  },
+  {
+    "image": "deadpool",
+    "name": "Deadpool 3",
+    "genre": "Action/Comedy / 120 min",
+    "trailerURL": "https://www.youtube.com/watch?v=73_1biulkYk"
+  }
+]

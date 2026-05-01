@@ -1,142 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#000000"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TOP BAR -->
-    <LinearLayout
-        android:id="@+id/topBar"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="20dp"
-        android:background="#2B2B2B"
+    <!-- Original Seat Selection Content -->
+    <RelativeLayout
+        android:id="@+id/seatSelectionLayout"
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:visibility="visible">
+
+        <!-- TOP BAR -->
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="#2B2B2B"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tvMovieName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oppenheimer"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="ScreenX | Hall 1st | 13.04.2025 | 22:15"
+                android:textColor="#AAAAAA" />
+        </LinearLayout>
+
+        <!-- CURVED SCREEN -->
+        <View
+            android:id="@+id/screenLine"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@id/topBar"
+            android:layout_marginTop="20dp"
+            android:background="#00FFAA" />
 
         <TextView
-            android:id="@+id/tvMovieName"
-            android:text="Oppenheimer"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/screenLine"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:text="SCREEN"
+            android:textColor="#00FFAA" />
+
+        <!-- SEATS -->
+        <LinearLayout
+            android:id="@+id/seatsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/screenLine"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <GridLayout
+                android:id="@+id/gridLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:columnCount="4" />
+
+            <GridLayout
+                android:id="@+id/gridRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="4" />
+        </LinearLayout>
+
+        <!-- LEGEND -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seatsContainer"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● Booked  "
+                android:textColor="#FF3B3B" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● Yours  "
+                android:textColor="#00FF6A" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● Available"
+                android:textColor="#AAAAAA" />
+        </LinearLayout>
+
+        <!-- TOTAL -->
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seatsContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:text="Selected: 0 | Total: Rs 0"
             android:textColor="#FFFFFF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="18sp" />
 
-        <TextView
-            android:text="ScreenX | Hall 1st | 13.04.2025 | 22:15"
-            android:textColor="#AAAAAA"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        <!-- BUTTONS -->
+        <LinearLayout
+            android:id="@+id/buttonsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
+            android:orientation="horizontal">
 
-    <!-- CURVED SCREEN -->
-    <View
-        android:id="@+id/screenLine"
-        android:layout_below="@id/topBar"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="#00FFAA"/>
+            <Button
+                android:id="@+id/btnBookSeats"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#FF0000"
+                android:text="Book Seats"
+                android:textColor="#FFFFFF" />
 
-    <TextView
-        android:layout_below="@id/screenLine"
-        android:layout_centerHorizontal="true"
-        android:text="SCREEN"
-        android:textColor="#00FFAA"
-        android:layout_marginTop="6dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btnProceedSnacks"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="Proceed to Snacks" />
+        </LinearLayout>
 
-    <!-- SEATS -->
-    <LinearLayout
-        android:id="@+id/seatsContainer"
-        android:layout_below="@id/screenLine"
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    </RelativeLayout>
 
-        <GridLayout
-            android:id="@+id/gridLeft"
-            android:columnCount="4"
-            android:layout_marginEnd="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <GridLayout
-            android:id="@+id/gridRight"
-            android:columnCount="4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <!-- LEGEND -->
-    <LinearLayout
-        android:layout_below="@id/seatsContainer"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="● Booked  "
-            android:textColor="#FF3B3B"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="● Yours  "
-            android:textColor="#00FF6A"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="● Available"
-            android:textColor="#AAAAAA"/>
-    </LinearLayout>
-
-    <!-- TOTAL -->
-    <TextView
-        android:id="@+id/tvTotal"
-        android:layout_below="@id/seatsContainer"
-        android:layout_marginTop="70dp"
-        android:layout_centerHorizontal="true"
-        android:text="Selected: 0 | Total: Rs 0"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <!-- BUTTONS -->
-    <LinearLayout
-        android:id="@+id/buttonsContainer"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="70dp">
-
-        <Button
-            android:id="@+id/btnBookSeats"
-            android:text="Book Seats"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FF0000"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
-
-        <Button
-            android:id="@+id/btnProceedSnacks"
-            android:text="Proceed to Snacks"
-            android:enabled="false"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-</RelativeLayout>
+</FrameLayout>

@@ -26,15 +26,17 @@
         android:textColor="@color/white"
         android:layout_marginBottom="32dp" />
 
+    <!-- Full Name Field -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxBackgroundColor="@color/black"
-        app:hintTextColor="@color/accent_red"
+        app:boxBackgroundColor="@android:color/transparent"
         app:boxStrokeColor="@color/accent_red"
-        app:boxStrokeErrorColor="@color/accent_red">
+        app:boxStrokeErrorColor="@color/accent_red"
+        app:hintTextColor="@color/accent_red"
+        android:textColorHint="@color/light_gray">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
@@ -46,15 +48,17 @@
             android:textColorHint="@color/light_gray" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Email Field -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxBackgroundColor="@color/black"
-        app:hintTextColor="@color/accent_red"
+        app:boxBackgroundColor="@android:color/transparent"
         app:boxStrokeColor="@color/accent_red"
-        app:boxStrokeErrorColor="@color/accent_red">
+        app:boxStrokeErrorColor="@color/accent_red"
+        app:hintTextColor="@color/accent_red"
+        android:textColorHint="@color/light_gray">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmail"
@@ -66,15 +70,17 @@
             android:textColorHint="@color/light_gray" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Password Field -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxBackgroundColor="@color/black"
-        app:hintTextColor="@color/accent_red"
+        app:boxBackgroundColor="@android:color/transparent"
         app:boxStrokeColor="@color/accent_red"
         app:boxStrokeErrorColor="@color/accent_red"
+        app:hintTextColor="@color/accent_red"
+        android:textColorHint="@color/light_gray"
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -87,15 +93,17 @@
             android:textColorHint="@color/light_gray" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Confirm Password Field -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxBackgroundColor="@color/black"
-        app:hintTextColor="@color/accent_red"
+        app:boxBackgroundColor="@android:color/transparent"
         app:boxStrokeColor="@color/accent_red"
         app:boxStrokeErrorColor="@color/accent_red"
+        app:hintTextColor="@color/accent_red"
+        android:textColorHint="@color/light_gray"
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
